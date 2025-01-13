@@ -7,13 +7,19 @@ class NoteViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        CustomAppBar(),
-        Expanded(
-          child: NotesListView(),
-        ),
-      ],
+    return const Padding(
+      padding: EdgeInsets.only(right: 24, left: 24, top: 10),
+      child: Column(
+        children: [
+          CustomAppBar(
+            title: 'Notes',
+            icon: Icons.search,
+          ),
+          Expanded(
+            child: NotesListView(),
+          ),
+        ],
+      ),
     );
   }
 }
