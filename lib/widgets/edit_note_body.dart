@@ -12,6 +12,9 @@ class EditNoteBody extends StatelessWidget {
       padding: EdgeInsets.only(right: 24, left: 24, top: 10),
       child: Column(
         children: [
+            SizedBox(
+            height: 50,
+          ),
           CustomAppBar(
             title: 'Edit Note',
             icon: Icons.check,
