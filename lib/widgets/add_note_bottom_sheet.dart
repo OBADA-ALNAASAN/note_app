@@ -1,79 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:note_app/widgets/custom_button.dart';
-import 'package:note_app/widgets/custom_text_form_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:note_app/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:note_app/widgets/add_note_form.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
   const AddNoteBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16),
       child: SingleChildScrollView(
-        child: AddNoteForm(),
-      ),
-    );
-  }
-}
-
-class AddNoteForm extends StatefulWidget {
-  const AddNoteForm({
-    super.key,
-  });
-
-  @override
-  State<AddNoteForm> createState() => _AddNoteFormState();
-}
-
-final GlobalKey<FormState> formKey = GlobalKey();
-String? title, subtitle;
-
-class _AddNoteFormState extends State<AddNoteForm> {
-  @override
-  Widget build(BuildContext context) {
-    AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-
-    return Form(
-      key: formKey,
-      autovalidateMode: autovalidateMode,
-      child: Column(
-        children: [
-          SizedBox(
-            height: 36,
-          ),
-          CustomTextFormField(
-            onSaved: (val) {
-              title = val;
-            },
-            hint: 'Title',
-          ),
-          SizedBox(
-            height: 16,
-          ),
-          CustomTextFormField(
-            onSaved: (val) {
-              subtitle = val;
-            },
-            hint: 'Content',
-            maxLines: 5,
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          CustomButton(
-            onTap: () {
-              if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
-              } else {
-                autovalidateMode = AutovalidateMode.always;
-                setState(() {});
-              }
-            },
-          ),
-          SizedBox(
-            height: 30,
-          ),
-        ],
+        child: BlocConsumer<AddNoteCubit, AddNoteState>(
+          listener: (context, state) {
+            if (state is AddNoteFailure) {
+              print(state.errMessage);
+            }
+            if (state is AddNoteSuccces) {
+              Navigator.pop(context);
+            }
+          },
+          builder: (context, state) {
+            return ModalProgressHUD(
+                inAsyncCall: state is AddNoteLoading ? true : false,
+                child: AddNoteForm());
+          },
+        ),
       ),
     );
   }
