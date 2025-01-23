@@ -12,10 +12,11 @@ class NotesView extends StatelessWidget {
         child: Scaffold(
       body: const NoteViewBody(),
       floatingActionButton: FloatingActionButton(
-          backgroundColor:kPrimaryColor,
+          backgroundColor: kPrimaryColor,
           shape: const CircleBorder(), // Ensure it's circular
           onPressed: () {
             showModalBottomSheet(
+              isScrollControlled: true,
               context: context,
               builder: (context) {
                 return const AddNoteBottomSheet();
