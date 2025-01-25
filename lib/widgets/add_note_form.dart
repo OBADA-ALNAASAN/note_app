@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:note_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:note_app/model/note_model.dart';
+import 'package:note_app/widgets/color_list_view.dart';
 import 'package:note_app/widgets/custom_button.dart';
 import 'package:note_app/widgets/custom_text_form_field.dart';
 
@@ -47,6 +48,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
             hint: 'Content',
             maxLines: 5,
           ),
+          ColorsListView(),
           SizedBox(
             height: 50,
           ),
@@ -56,9 +58,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 isLoading: state is AddNoteLoading ? true : false,
                 onTap: () {
                   if (formKey.currentState!.validate()) {
-                    DateTime currentDate = DateTime.now();
-                    String formattedCurrentDate =
-                        DateFormat('dd-mm-yyyy').format(currentDate);
+                    String formattedCurrentDate = formateDate();
                     formKey.currentState!.save();
                     NoteModel note = NoteModel(
                         title: title!,
@@ -80,5 +80,11 @@ class _AddNoteFormState extends State<AddNoteForm> {
         ],
       ),
     );
+  }
+
+  String formateDate() {
+    DateTime currentDate = DateTime.now();
+    String formattedCurrentDate = DateFormat('dd-mm-yyyy').format(currentDate);
+    return formattedCurrentDate;
   }
 }
