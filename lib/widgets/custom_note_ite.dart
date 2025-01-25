@@ -18,7 +18,9 @@ class CustomNoteItem extends StatelessWidget {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (context) {
-            return const EditNoteView();
+            return EditNoteView(
+              note: note,
+            );
           },
         ));
       },
@@ -40,7 +42,7 @@ class CustomNoteItem extends StatelessWidget {
               subtitle: Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: Text(
-                  note.subTitle,
+                  note.content,
                   style: TextStyle(
                       color: Color.fromARGB(255, 37, 32, 32), fontSize: 16),
                 ),
